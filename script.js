@@ -1,24 +1,23 @@
 function calculateMinCost(ropes) {
   //your code here
 	
-  const heap = [...ropes].sort((a, b) => a - b); // sort to simulate min-heap
+   // Turn array into a min-heap using a priority queue approach
+  ropes.sort((a, b) => a - b);
 
   let totalCost = 0;
 
-  while (heap.length > 1) {
-    // Take two smallest ropes
-    const first = heap.shift();
-    const second = heap.shift();
-
-    const cost = first + second;
+  while (ropes.length > 1) {
+    let first = ropes.shift();
+    let second = ropes.shift();
+    let cost = first + second;
     totalCost += cost;
 
-    // Insert the combined rope back and keep heap sorted
-    heap.push(cost);
-    heap.sort((a, b) => a - b);
+    // Insert the new combined rope back into the array and keep it sorted
+    let index = ropes.findIndex(r => r > cost);
+    if (index === -1) ropes.push(cost);
+    else ropes.splice(index, 0, cost);
   }
 
   return totalCost;
-  
   
 }  
